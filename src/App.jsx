@@ -543,10 +543,22 @@ export default function App() {
     setView("home");
   };
 
-  const handleSelectPlan = (plan) => {
+  const handleSelectPlan = async (plan) => {
     if (plan === "free") { setView(user ? "dashboard" : "auth"); return; }
     if (!user) { setView("auth"); return; }
-    setStripe(plan);
+    // Real Stripe checkout
+    try {
+      const res = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan, uid: user.uid, email: user.email }),
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch(e) {
+      // Fallback to mock modal if Stripe not configured yet
+      setStripe(plan);
+    }
   };
 
   const handlePayment = () => {
