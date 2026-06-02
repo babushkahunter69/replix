@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "claude-sonnet-4-5",
         max_tokens: 1000,
-        messages: [{ role: "user", content: prompt }],
+        messages: [{ role: "user", content: prompt + "\n\nDo not use placeholder text like [Business Owner Name]. Sign off naturally, e.g. Warm regards, The Team." }],
       }),
     });
 
