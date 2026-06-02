@@ -427,7 +427,7 @@ function StarPicker({ value, onChange }) {
 function Nav({ user, onLogout, goTo }) {
   return (
     <nav className="nav">
-      <div className="wordmark"><em>re</em><span>plix</span></div>
+      <div className="wordmark" onClick={()=>goTo("home")} style={{cursor:"pointer"}}><em>re</em><span>plix</span></div>
       <div className="nav-actions">
         {user ? (
           <>
