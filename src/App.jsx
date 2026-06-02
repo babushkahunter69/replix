@@ -200,7 +200,7 @@ function AuthPage({ onAuth }) {
     <div className="page">
       <div style={{marginBottom:36}}>
         <div className="sh">{tab==="login"?"Welcome back":"Create your account"}</div>
-        <p className="ss">{tab==="login"?"Sign in to Replix":"Free plan, no credit card needed"}</p>
+        <p className="ss">{tab==="login"?"Sign in to Rply":"Free plan, no credit card needed"}</p>
       </div>
       <div className="card">
         <div className="auth-toggle">
@@ -310,7 +310,7 @@ function StripeModal({ plan, onDone, onClose }) {
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24}}>
               <div>
                 <div className="modal-title">Stripe checkout</div>
-                <div className="modal-sub">Replix {label} — {price}/month</div>
+                <div className="modal-sub">Rply {label} — {price}/month</div>
               </div>
               <button style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"var(--ink3)",lineHeight:1,padding:4}} onClick={onClose}>✕</button>
             </div>

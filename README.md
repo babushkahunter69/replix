@@ -1,4 +1,4 @@
-# Replix
+# Rply
 
 AI-powered review response tool for local businesses. Paste any Google or Yelp review, pick a tone, get a polished reply in seconds.
 

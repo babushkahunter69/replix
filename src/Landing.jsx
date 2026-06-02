@@ -520,7 +520,7 @@ export default function Landing({ goTo }) {
             Stop ignoring<br/>your reviews.<br/><em>Start winning.</em>
           </h1>
           <p className="hero-sub">
-            Replix writes polished, human-sounding responses to your Google and Yelp reviews in under 2 seconds. Build trust, rank higher, convert more customers.
+            Rply writes polished, human-sounding responses to your Google and Yelp reviews in under 2 seconds. Build trust, rank higher, convert more customers.
           </p>
           <div className="hero-ctas">
             <button className="cta-primary" onClick={() => goTo("auth")}>Start free — no card needed</button>
@@ -561,7 +561,7 @@ export default function Landing({ goTo }) {
           <h2 className="section-h2">Three steps to a perfect reply</h2>
           <div className="steps">
             {[
-              { n:"01", icon:"📋", title:"Paste the review", body:"Copy any review from Google, Yelp, or TripAdvisor and paste it into Replix." },
+              { n:"01", icon:"📋", title:"Paste the review", body:"Copy any review from Google, Yelp, or TripAdvisor and paste it into Rply." },
               { n:"02", icon:"🎚️", title:"Pick your tone", body:"Choose from Professional, Friendly, Apologetic, or Grateful to match the situation." },
               { n:"03", icon:"✨", title:"Copy and post", body:"Get a polished, human-sounding response in seconds. Copy it and post directly." },
             ].map(s => (
@@ -582,13 +582,13 @@ export default function Landing({ goTo }) {
             <h2 className="section-h2">See the difference a reply makes</h2>
             <div className="ba-grid">
               <div className="ba-card before">
-                <span className="ba-badge">Without Replix</span>
+                <span className="ba-badge">Without Rply</span>
                 <div className="ba-stars">★★☆☆☆</div>
                 <p className="ba-review">"Waited 45 minutes with a reservation. Food was cold and the waiter seemed annoyed we were even there. Won't be returning."</p>
                 <p className="ba-no-response">No response from owner — 6 weeks ago</p>
               </div>
               <div className="ba-card after">
-                <span className="ba-badge">With Replix</span>
+                <span className="ba-badge">With Rply</span>
                 <div className="ba-stars">★★☆☆☆</div>
                 <p className="ba-review">"Waited 45 minutes with a reservation. Food was cold and the waiter seemed annoyed we were even there. Won't be returning."</p>
                 <p className="ba-response">We're truly sorry about your experience — that's not the standard we hold ourselves to. A 45-minute wait with a reservation is unacceptable, and we'd love the chance to make it right. Please reach out to us directly and your next visit is on us. — The Team</p>
@@ -604,8 +604,8 @@ export default function Landing({ goTo }) {
           <div className="testi-grid">
             {[
               { q:"I used to dread opening Google reviews. Now I respond to every single one in minutes. My rating went from 4.1 to 4.6 in two months.", name:"Maria S.", biz:"Bloom Hair Studio", init:"MS" },
-              { q:"As a restaurant owner I don't have time to craft responses. Replix does it for me and honestly sounds more professional than I ever could.", name:"James T.", biz:"The Corner Bistro", init:"JT" },
-              { q:"The apologetic tone is incredible. We had a rough patch and the responses Replix wrote actually brought customers back.", name:"Carla M.", biz:"Apex Fitness", init:"CM" },
+              { q:"As a restaurant owner I don't have time to craft responses. Rply does it for me and honestly sounds more professional than I ever could.", name:"James T.", biz:"The Corner Bistro", init:"JT" },
+              { q:"The apologetic tone is incredible. We had a rough patch and the responses Rply wrote actually brought customers back.", name:"Carla M.", biz:"Apex Fitness", init:"CM" },
             ].map(t => (
               <div key={t.name} className="testi-card">
                 <div className="testi-stars">★★★★★</div>
@@ -664,7 +664,7 @@ export default function Landing({ goTo }) {
           <div className="faq-list">
             {[
               { q:"Do I need any technical skills?", a:"None. Paste a review, pick a tone, click generate. That's it." },
-              { q:"Will responses sound robotic or templated?", a:"No — Replix is powered by Claude AI and is specifically prompted to write like a real business owner, not a customer service template." },
+              { q:"Will responses sound robotic or templated?", a:"No — Rply is powered by Claude AI and is specifically prompted to write like a real business owner, not a customer service template." },
               { q:"What platforms does it work with?", a:"Any platform where you can copy and paste text — Google, Yelp, TripAdvisor, Facebook, and more." },
               { q:"Can I cancel anytime?", a:"Yes, absolutely. No contracts, no cancellation fees. Cancel in one click from your account." },
               { q:"What counts as a 'response' on the free plan?", a:"Each time you click Generate Response, that counts as one. You get 3 per month on the free plan, unlimited on Pro." },
@@ -679,8 +679,8 @@ export default function Landing({ goTo }) {
 
         {/* ── FOOTER ── */}
         <footer className="footer">
-          <div className="footer-logo"><em>re</em><span>plix</span></div>
-          <div className="footer-copy">© 2026 Replix. Built for local businesses.</div>
+          <div className="footer-logo"><em>r</em><span>ply</span></div>
+          <div className="footer-copy">© 2026 Rply. Built for local businesses.</div>
         </footer>
 
       </div>
