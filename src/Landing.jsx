@@ -2,12 +2,12 @@ export default function Landing({ goTo }) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
 
         .lp * { box-sizing: border-box; margin: 0; padding: 0; }
 
         .lp {
-          font-family: 'Geist', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           color: #0f0e0c;
           background: #faf9f6;
           -webkit-font-smoothing: antialiased;
@@ -45,13 +45,13 @@ export default function Landing({ goTo }) {
         }
 
         .hero-h1 {
-          font-family: 'Fraunces', serif;
-          font-size: clamp(52px, 9vw, 88px);
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(36px, 5.5vw, 58px);
           font-weight: 400;
           line-height: 1.0;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.02em;
           color: #0f0e0c;
-          margin-bottom: 28px;
+          margin-bottom: 24px;
         }
 
         .hero-h1 em {
@@ -60,10 +60,10 @@ export default function Landing({ goTo }) {
         }
 
         .hero-sub {
-          font-size: 18px;
+          font-size: 16px;
           color: #6b6760;
           line-height: 1.7;
-          font-weight: 300;
+          font-weight: 400;
           max-width: 480px;
           margin-bottom: 44px;
         }
@@ -80,7 +80,7 @@ export default function Landing({ goTo }) {
           color: #fff;
           border: none;
           border-radius: 8px;
-          font-family: 'Geist', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           font-size: 15px;
           font-weight: 500;
           padding: 14px 28px;
@@ -95,7 +95,7 @@ export default function Landing({ goTo }) {
           color: #6b6760;
           border: 1px solid #e8e4de;
           border-radius: 8px;
-          font-family: 'Geist', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           font-size: 15px;
           font-weight: 500;
           padding: 14px 28px;
@@ -113,8 +113,8 @@ export default function Landing({ goTo }) {
 
         .stat-item { }
         .stat-num {
-          font-family: 'Fraunces', serif;
-          font-size: 32px;
+          font-family: 'DM Serif Display', serif;
+          font-size: 24px;
           font-weight: 400;
           color: #0f0e0c;
           line-height: 1;
@@ -174,8 +174,8 @@ export default function Landing({ goTo }) {
         }
 
         .section-h2 {
-          font-family: 'Fraunces', serif;
-          font-size: clamp(32px, 5vw, 52px);
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(26px, 3.5vw, 38px);
           font-weight: 400;
           line-height: 1.1;
           letter-spacing: -0.02em;
@@ -202,7 +202,7 @@ export default function Landing({ goTo }) {
         }
 
         .step-num {
-          font-family: 'Fraunces', serif;
+          font-family: 'DM Serif Display', serif;
           font-size: 13px;
           font-weight: 400;
           color: #c8c3bb;
@@ -377,8 +377,8 @@ export default function Landing({ goTo }) {
         }
 
         .pricing-h2 {
-          font-family: 'Fraunces', serif;
-          font-size: clamp(32px, 5vw, 52px);
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(26px, 3.5vw, 38px);
           font-weight: 400;
           line-height: 1.1;
           letter-spacing: -0.02em;
@@ -427,8 +427,8 @@ export default function Landing({ goTo }) {
         .p-card.pro  .p-tier { color: #9a9590; }
 
         .p-price {
-          font-family: 'Fraunces', serif;
-          font-size: 40px;
+          font-family: 'DM Serif Display', serif;
+          font-size: 32px;
           font-weight: 400;
           line-height: 1;
           margin-bottom: 4px;
@@ -452,7 +452,7 @@ export default function Landing({ goTo }) {
           color: #0f0e0c;
           border: none;
           border-radius: 8px;
-          font-family: 'Geist', sans-serif;
+          font-family: 'DM Sans', sans-serif;
           font-size: 15px;
           font-weight: 500;
           padding: 14px 32px;
@@ -501,7 +501,7 @@ export default function Landing({ goTo }) {
         }
 
         .footer-logo {
-          font-family: 'Fraunces', serif;
+          font-family: 'DM Serif Display', serif;
           font-size: 16px;
           font-weight: 400;
         }

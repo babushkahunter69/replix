@@ -103,7 +103,7 @@ body{background:var(--surface)}
 .hist-item:last-child{border-bottom:none}
 .hist-meta{font-size:11px;color:var(--ink3);margin-bottom:3px}
 .hist-snip{font-size:12px;color:var(--ink2);line-height:1.4}
-.sh{font-family:'Fraunces',serif;font-weight:400;font-size:32px;letter-spacing:-.02em;margin-bottom:6px}
+.sh{font-family:'Fraunces',serif;font-weight:400;font-size:24px;letter-spacing:-.01em;margin-bottom:6px}
 .ss{font-size:15px;color:var(--ink3);font-weight:300}
 .stripe-note{margin-top:32px;padding:16px 20px;background:var(--rule2);border:1px solid var(--rule);border-radius:10px;font-size:12px;color:var(--ink3);line-height:1.7;text-align:center}
 code{font-family:monospace;background:var(--rule);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--ink2)}
