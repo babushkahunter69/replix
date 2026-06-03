@@ -18,7 +18,8 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: `Google Places error: ${searchData.status} - ${searchData.error_message || ""}` });
     }
 
-    const places = (searchData.results || []).slice(0, 10);
+    const places = (searchData.results || []).slice(0, 20);
+    const nextPageToken = searchData.next_page_token || null;
 
     // Step 2: For each place, get reviews
     const businesses = await Promise.all(places.map(async (place) => {
@@ -61,7 +62,7 @@ export default async function handler(req, res) {
       return bU - aU;
     });
 
-    res.status(200).json({ businesses: valid });
+    res.status(200).json({ businesses: valid, nextPageToken });
   } catch(e) {
     res.status(500).json({ error: e.message });
   }

@@ -75,10 +75,28 @@ export default function Leads() {
   const [emails,   setEmails]   = useState({});
   const [genning,  setGenning]  = useState({});
   const [copied,   setCopied]   = useState({});
+  const [nextToken, setNextToken] = useState(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  const loadMore = async () => {
+    if (!nextToken) return;
+    setLoadingMore(true);
+    try {
+      const res  = await fetch("/api/find-leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query.trim(), city: city.trim(), pageToken: nextToken }),
+      });
+      const data = await res.json();
+      setResults(r => [...r, ...(data.businesses || [])]);
+      setNextToken(data.nextPageToken || null);
+    } catch(e) { setErr(e.message); }
+    setLoadingMore(false);
+  };
 
   const search = async () => {
     if (!query.trim() || !city.trim()) { setErr("Please enter both a business type and city."); return; }
-    setErr(""); setLoading(true); setResults([]);
+    setErr(""); setLoading(true); setResults([]); setNextToken(null);
 
     try {
       const res  = await fetch("/api/find-leads", {
@@ -89,6 +107,7 @@ export default function Leads() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Search failed");
       setResults(data.businesses || []);
+      setNextToken(data.nextPageToken || null);
       if (!data.businesses?.length) setErr("No businesses found. Try a different search.");
     } catch(e) {
       setErr(e.message);
@@ -198,6 +217,13 @@ export default function Leads() {
                   );
                 })}
               </div>
+              {nextToken && (
+                <div style={{textAlign:"center",marginTop:24}}>
+                  <button className="leads-btn-ghost" onClick={loadMore} disabled={loadingMore} style={{padding:"10px 24px",fontSize:14}}>
+                    {loadingMore ? <><span className="spin" style={{borderTopColor:"#0f0e0c"}}/>Loading...</> : "Load more results"}
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>
