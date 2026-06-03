@@ -4,6 +4,7 @@ import Leads from "./Leads";
 import {
   signUp, signIn, signInWithGoogle, signOutUser,
   onAuthChange, getUserData, incrementUsage, saveBizName,
+  saveResponse, getHistory,
 } from "./firebase";
 
 const FREE_LIMIT = 3;
@@ -348,6 +349,16 @@ function Dashboard({ user, onUsage, goTo }) {
   const [copied,  setCopied]  = useState(false);
   const [err,     setErr]     = useState("");
   const [history, setHistory] = useState([]);
+  const [histLoading, setHistLoading] = useState(false);
+
+  useEffect(() => {
+    if (!user.isPro) return;
+    setHistLoading(true);
+    getHistory(user.uid).then(h => {
+      setHistory(h);
+      setHistLoading(false);
+    }).catch(() => setHistLoading(false));
+  }, [user.uid]);
 
   const locked = !user.isPro && user.usageCount >= FREE_LIMIT;
   const pct    = Math.min(100, (user.usageCount / FREE_LIMIT) * 100);
@@ -381,7 +392,13 @@ Return ONLY the response. No preamble, no labels.`;
       const out = data.text || "";
       setResult(out);
       if (user.isPro && out) {
-        setHistory(h => [{snip:review.slice(0,55)+(review.length>55?"…":""),stars,tone,time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}, ...h.slice(0,4)]);
+        const entry = {
+          snip: review.slice(0,55)+(review.length>55?"…":""),
+          review, response: out, stars, tone, biz,
+          time: new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})
+        };
+        setHistory(h => [entry, ...h.slice(0,29)]);
+        saveResponse(user.uid, entry).catch(()=>{});
       }
       await onUsage(biz);
     } catch(e) {
@@ -468,14 +485,17 @@ Return ONLY the response. No preamble, no labels.`;
           )}
         </div>
 
-        {user.isPro && history.length > 0 && (
-          <div className="card" style={{position:"sticky",top:76}}>
-            <div style={{fontWeight:500,fontSize:14,marginBottom:2}}>Recent</div>
-            <div style={{fontSize:12,color:"var(--ink3)",marginBottom:16}}>Last {history.length} generated</div>
+        {user.isPro && (
+          <div className="card" style={{position:"sticky",top:76,maxHeight:"80vh",overflowY:"auto"}}>
+            <div style={{fontWeight:500,fontSize:14,marginBottom:2}}>Response history</div>
+            <div style={{fontSize:12,color:"var(--ink3)",marginBottom:16}}>Last 30 saved to your account</div>
+            {histLoading && <div style={{fontSize:13,color:"var(--ink3)",textAlign:"center",padding:"20px 0"}}>Loading...</div>}
+            {!histLoading && history.length===0 && <div style={{fontSize:13,color:"var(--ink3)",textAlign:"center",padding:"20px 0"}}>No responses yet. Generate your first one!</div>}
             {history.map((h,i) => (
-              <div key={i} className="hist-item">
-                <div className="hist-meta">{"★".repeat(h.stars)} · {h.tone} · {h.time}</div>
+              <div key={h.id||i} className="hist-item" style={{cursor:"pointer"}} onClick={()=>{setReview(h.review||"");setStars(h.stars);setTone(h.tone);setBiz(h.biz||"");setResult(h.response||"");}}>
+                <div className="hist-meta">{"★".repeat(h.stars||0)} · {h.tone} · {h.time}</div>
                 <div className="hist-snip">{h.snip}</div>
+                {h.response && <div style={{fontSize:11,color:"var(--ink3)",marginTop:3}}>Click to reload</div>}
               </div>
             ))}
           </div>

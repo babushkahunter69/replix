@@ -15,6 +15,12 @@ import {
   setDoc,
   updateDoc,
   increment,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  getDocs,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -85,4 +91,22 @@ export async function incrementUsage(uid) {
 
 export async function saveBizName(uid, savedBiz) {
   await updateDoc(doc(db, "users", uid), { savedBiz });
+}
+
+// ── response history ──────────────────────────────────────────────────────────
+export async function saveResponse(uid, entry) {
+  await addDoc(collection(db, "users", uid, "history"), {
+    ...entry,
+    createdAt: new Date().toISOString(),
+  });
+}
+
+export async function getHistory(uid, max = 30) {
+  const q = query(
+    collection(db, "users", uid, "history"),
+    orderBy("createdAt", "desc"),
+    limit(max)
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
