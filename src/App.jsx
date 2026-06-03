@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Landing from "./Landing";
+import Leads from "./Leads";
 import {
   signUp, signIn, signInWithGoogle, signOutUser,
   onAuthChange, getUserData, incrementUsage, saveBizName,
@@ -579,6 +580,7 @@ export default function App() {
       {view==="pricing"   && <PricingPage user={user} onSelect={handleSelectPlan} />}
       {view==="dashboard" && user && <Dashboard user={user} onUsage={handleUsage} goTo={setView} />}
       {view==="dashboard" && !user && <AuthPage onAuth={()=>setView("dashboard")} />}
+      {view==="leads" && <Leads />}
 
       {stripe && <StripeModal plan={stripe} onDone={handlePayment} onClose={()=>setStripe(null)} />}
     </div>
