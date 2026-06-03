@@ -50,6 +50,7 @@ export default async function handler(req, res) {
         stripeCustomerId:   session.customer,
         stripeSubscription: session.subscription,
         upgradedAt:         new Date().toISOString(),
+        usageCount:         0,
       });
     }
   }
