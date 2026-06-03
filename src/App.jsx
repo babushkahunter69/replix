@@ -489,7 +489,10 @@ Return ONLY the response. No preamble, no labels.`;
 
 // ── Root ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [view,    setView]    = useState("home");
+  const [view,    setView]    = useState(() => {
+    if (window.location.pathname === "/leads") return "leads";
+    return "home";
+  });
   const [user,    setUser]    = useState(null);
   const [loading, setLoading] = useState(true); // wait for Firebase auth check
   const [stripe,  setStripe]  = useState(null);
