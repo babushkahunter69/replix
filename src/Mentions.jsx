@@ -81,7 +81,29 @@ export default function Mentions() {
   const [replies, setReplies] = useState({});
   const [genning, setGenning] = useState({});
   const [copied,  setCopied]  = useState({});
+  const [done,    setDone]    = useState(() => {
+    try { return new Set(JSON.parse(localStorage.getItem('rply_mentions_done') || '[]')); }
+    catch { return new Set(); }
+  });
   const [num,     setNum]     = useState(10);
+
+  const markDone = (id) => {
+    setDone(d => {
+      const next = new Set(d);
+      next.add(id);
+      localStorage.setItem('rply_mentions_done', JSON.stringify([...next]));
+      return next;
+    });
+  };
+
+  const unmarkDone = (id) => {
+    setDone(d => {
+      const next = new Set(d);
+      next.delete(id);
+      localStorage.setItem('rply_mentions_done', JSON.stringify([...next]));
+      return next;
+    });
+  };
 
   const search = async (q) => {
     const searchQ = q || query;
@@ -126,7 +148,9 @@ export default function Mentions() {
     setTimeout(() => setCopied(c => ({...c, [id]: false})), 2000);
   };
 
-  const filtered = filter === "all" ? results : results.filter(r => r.source.toLowerCase() === filter);
+  const filtered = filter === "all" ? results
+    : filter === "done" ? results.filter(r => done.has(r.id))
+    : results.filter(r => r.source.toLowerCase() === filter && !done.has(r.id));
   const sources  = [...new Set(results.map(r => r.source.toLowerCase()))];
 
   return (
@@ -180,12 +204,18 @@ export default function Mentions() {
 
               <div className="opp-grid">
                 {filtered.map(opp => (
-                  <div key={opp.id} className="opp-card">
+                  <div key={opp.id} className="opp-card" style={{opacity: done.has(opp.id) ? 0.5 : 1, transition:"opacity .2s"}}>
                     <div className="opp-header">
                       <a className="opp-title" href={opp.url} target="_blank" rel="noreferrer">{opp.title}</a>
-                      <button className="mn-btn-ghost" onClick={() => generateReply(opp)} disabled={genning[opp.id]}>
-                        {genning[opp.id] ? <><span className="spin" style={{borderTopColor:"#0f0e0c"}}/>Writing...</> : "Write reply"}
-                      </button>
+                      <div style={{display:"flex",gap:8}}>
+                        <button className="mn-btn-ghost" onClick={() => generateReply(opp)} disabled={genning[opp.id]}>
+                          {genning[opp.id] ? <><span className="spin" style={{borderTopColor:"#0f0e0c"}}/>Writing...</> : "Write reply"}
+                        </button>
+                        <button className="mn-btn-ghost" onClick={() => done.has(opp.id) ? unmarkDone(opp.id) : markDone(opp.id)}
+                          style={{color: done.has(opp.id) ? "#1a6644" : "#9a9590", borderColor: done.has(opp.id) ? "#b6e4cc" : "#e8e4de", background: done.has(opp.id) ? "#edf7f1" : "#fff"}}>
+                          {done.has(opp.id) ? "✓ Done" : "Mark done"}
+                        </button>
+                      </div>
                     </div>
 
                     <div className="opp-meta">
