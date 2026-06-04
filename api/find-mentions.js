@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { query } = req.body || {};
+  const { query, num = 10 } = req.body || {};
   if (!query) return res.status(400).json({ error: "Missing query" });
 
   const key = process.env.SERPAPI_KEY;
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const sites  = "site:reddit.com OR site:quora.com OR site:tripadvisor.com OR site:trustpilot.com";
     const fullQ  = `${query} (${sites})`;
-    const url    = `https://serpapi.com/search.json?q=${encodeURIComponent(fullQ)}&num=10&api_key=${key}`;
+    const url    = `https://serpapi.com/search.json?q=${encodeURIComponent(fullQ)}&num=${Math.min(Number(num),50)}&api_key=${key}`;
 
     const r = await fetch(url);
     const d = await r.json();

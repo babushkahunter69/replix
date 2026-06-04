@@ -81,6 +81,7 @@ export default function Mentions() {
   const [replies, setReplies] = useState({});
   const [genning, setGenning] = useState({});
   const [copied,  setCopied]  = useState({});
+  const [num,     setNum]     = useState(10);
 
   const search = async (q) => {
     const searchQ = q || query;
@@ -91,7 +92,7 @@ export default function Mentions() {
       const res  = await fetch("/api/find-mentions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: searchQ.trim() }),
+        body: JSON.stringify({ query: searchQ.trim(), num }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Search failed");
@@ -142,6 +143,11 @@ export default function Mentions() {
           <div className="search-row">
             <input className="mn-input" placeholder='e.g. "how to respond to bad google reviews"' value={query}
               onChange={e => setQuery(e.target.value)} onKeyDown={e => e.key==="Enter" && search()} />
+            <select value={num} onChange={e=>setNum(Number(e.target.value))} style={{fontFamily:"'DM Sans',sans-serif",fontSize:14,color:"#0f0e0c",background:"#fff",border:"1px solid #e8e4de",borderRadius:8,padding:"10px 14px",outline:"none",cursor:"pointer"}}>
+              <option value={10}>10 results</option>
+              <option value={20}>20 results</option>
+              <option value={50}>50 results</option>
+            </select>
             <button className="mn-btn" onClick={() => search()} disabled={loading}>
               {loading ? <><span className="spin"/>Searching...</> : "Find opportunities"}
             </button>
