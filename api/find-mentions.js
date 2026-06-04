@@ -4,41 +4,37 @@ export default async function handler(req, res) {
   const { query } = req.body || {};
   if (!query) return res.status(400).json({ error: "Missing query" });
 
-  const key = process.env.GOOGLE_PLACES_API_KEY;
-  if (!key) return res.status(500).json({ error: "Search API key not configured" });
-
-  // Search multiple platforms via Google Custom Search
-  const searchKey = process.env.GOOGLE_SEARCH_API_KEY || key;
-  const cx        = process.env.GOOGLE_SEARCH_CX;
-
-  if (!cx) return res.status(500).json({ error: "Google Search CX not configured. Add GOOGLE_SEARCH_CX to env vars." });
+  const key = process.env.SERPAPI_KEY;
+  if (!key) return res.status(500).json({ error: "SERPAPI_KEY not configured" });
 
   try {
-    const sites   = "site:reddit.com OR site:quora.com OR site:tripadvisor.com OR site:trustpilot.com OR site:yelp.com/talk";
-    const fullQ   = `${query} (${sites})`;
+    const sites  = "site:reddit.com OR site:quora.com OR site:tripadvisor.com OR site:trustpilot.com";
+    const fullQ  = `${query} (${sites})`;
+    const url    = `https://serpapi.com/search.json?q=${encodeURIComponent(fullQ)}&num=10&api_key=${key}`;
 
-    const url = `https://www.googleapis.com/customsearch/v1?key=${searchKey}&cx=${cx}&q=${encodeURIComponent(fullQ)}&num=10`;
-    const r   = await fetch(url);
-    const d   = await r.json();
+    const r = await fetch(url);
+    const d = await r.json();
 
-    if (d.error) return res.status(502).json({ error: d.error.message });
+    if (d.error) return res.status(502).json({ error: d.error });
 
-    const results = (d.items || []).map((item, i) => {
-      const domain = new URL(item.link).hostname.replace("www.","");
+    const results = (d.organic_results || []).map((item, i) => {
+      const domain = (() => {
+        try { return new URL(item.link).hostname.replace("www.", ""); } catch { return ""; }
+      })();
+
       let source = "Forum";
-      if (domain.includes("reddit"))      source = "Reddit";
-      else if (domain.includes("quora"))  source = "Quora";
+      if (domain.includes("reddit"))       source = "Reddit";
+      else if (domain.includes("quora"))   source = "Quora";
       else if (domain.includes("tripadvisor")) source = "TripAdvisor";
-      else if (domain.includes("yelp"))   source = "Yelp";
       else if (domain.includes("trustpilot")) source = "Trustpilot";
 
       return {
-        id: `result-${i}`,
-        title:   item.title,
-        url:     item.link,
-        snippet: item.snippet?.slice(0, 300) || "",
+        id:      `result-${i}`,
+        title:   item.title   || "",
+        url:     item.link    || "",
+        snippet: (item.snippet || "").slice(0, 300),
         source,
-        date:    item.snippet?.match(/\w+ \d+, \d{4}/)?.[0] || null,
+        date:    item.date    || null,
       };
     });
 
