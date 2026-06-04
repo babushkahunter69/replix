@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Landing from "./Landing";
 import Leads from "./Leads";
+import Mentions from "./Mentions";
 import {
   signUp, signIn, signInWithGoogle, signOutUser,
   onAuthChange, getUserData, incrementUsage, saveBizName,
@@ -511,6 +512,7 @@ Return ONLY the response. No preamble, no labels.`;
 export default function App() {
   const [view,    setView]    = useState(() => {
     if (window.location.pathname === "/leads") return "leads";
+    if (window.location.pathname === "/mentions") return "mentions";
     return "home";
   });
   const [user,    setUser]    = useState(null);
@@ -604,6 +606,7 @@ export default function App() {
       {view==="dashboard" && user && <Dashboard user={user} onUsage={handleUsage} goTo={setView} />}
       {view==="dashboard" && !user && <AuthPage onAuth={()=>setView("dashboard")} />}
       {view==="leads" && <Leads />}
+      {view==="mentions" && <Mentions />}
 
       {stripe && <StripeModal plan={stripe} onDone={handlePayment} onClose={()=>setStripe(null)} />}
     </div>
