@@ -26,7 +26,7 @@ export default function Privacy({ goTo }) {
         <p className="updated">Last updated: June 4, 2026</p>
 
         <p>
-          Rply ("we", "our", or "us") is operated by Juliet Nasayao. This Privacy Policy explains how we collect, use, and protect your information when you use rply.space (the "Service").
+          Rply ("we", "our", or "us") is a software service. This Privacy Policy explains how we collect, use, and protect your information when you use rply.space (the "Service").
         </p>
         <p>
           By using Rply, you agree to the collection and use of information in accordance with this policy.
