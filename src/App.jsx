@@ -4,6 +4,7 @@ import Leads from "./Leads";
 import Mentions from "./Mentions";
 import ReviewQueue from "./ReviewQueue";
 import Templates from "./Templates";
+import Privacy from "./Privacy";
 import BrandVoice from "./BrandVoice";
 import {
   signUp, signIn, signInWithGoogle, signOutUser,
@@ -542,6 +543,7 @@ export default function App() {
     if (window.location.pathname === "/mentions") return "mentions";
     if (window.location.pathname === "/queue") return "queue";
     if (window.location.pathname === "/templates") return "templates";
+    if (window.location.pathname === "/privacy") return "privacy";
     if (window.location.pathname === "/brandvoice") return "brandvoice";
     return "home";
   });
@@ -642,6 +644,7 @@ export default function App() {
       {view==="leads" && <Leads />}
       {view==="queue" && user && <ReviewQueue user={user} goTo={setView} />}
       {view==="templates" && user && <Templates user={user} goTo={setView} />}
+      {view==="privacy" && <Privacy goTo={setView} />}
       {view==="mentions" && <Mentions />}
       {view==="brandvoice" && user && <BrandVoice user={user} onSave={handleBrandVoiceSave} goTo={setView} />}
 

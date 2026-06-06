@@ -680,7 +680,7 @@ export default function Landing({ goTo }) {
         {/* ── FOOTER ── */}
         <footer className="footer">
           <div className="footer-logo"><em>r</em><span>ply</span></div>
-          <div className="footer-copy">© 2026 Rply. Built for local businesses.</div>
+          <div className="footer-copy">© 2026 Rply. Built for local businesses. <span style={{margin:"0 8px",color:"var(--rule)"}}>·</span> <span style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>goTo("privacy")}>Privacy Policy</span></div>
         </footer>
 
       </div>
