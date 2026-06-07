@@ -538,6 +538,12 @@ Return ONLY the response. No preamble, no labels.`;
 
 // ── Root ──────────────────────────────────────────────────────────────────────
 export default function App() {
+  const navigate = (v) => {
+    const paths = { home:"/", auth:"/auth", pricing:"/pricing", dashboard:"/dashboard", brandvoice:"/brandvoice", queue:"/queue", templates:"/templates", leads:"/leads", mentions:"/mentions", privacy:"/privacy" };
+    window.history.pushState({}, "", paths[v] || "/");
+    setView(v);
+  };
+
   const [view,    setView]    = useState(() => {
     if (window.location.pathname === "/leads") return "leads";
     if (window.location.pathname === "/mentions") return "mentions";
@@ -628,7 +634,7 @@ export default function App() {
   return (
     <div className="root">
       <style>{S}</style>
-      <Nav user={user} onLogout={handleLogout} goTo={setView} />
+      <Nav user={user} onLogout={handleLogout} goTo={navigate} />
 
       {banner && (
         <div style={{textAlign:"center",padding:"11px",background:"var(--green-bg)",borderBottom:"1px solid #b6e4cc",fontSize:13,color:"var(--green)",fontWeight:500}}>
@@ -636,17 +642,17 @@ export default function App() {
         </div>
       )}
 
-      {view==="home"      && <Landing goTo={setView} />}
+      {view==="home"      && <Landing goTo={navigate} />}
       {view==="auth"      && <AuthPage onAuth={()=>setView("dashboard")} />}
       {view==="pricing"   && <PricingPage user={user} onSelect={handleSelectPlan} />}
-      {view==="dashboard" && user && <Dashboard user={user} onUsage={handleUsage} goTo={setView} />}
+      {view==="dashboard" && user && <Dashboard user={user} onUsage={handleUsage} goTo={navigate} />}
       {view==="dashboard" && !user && <AuthPage onAuth={()=>setView("dashboard")} />}
       {view==="leads" && <Leads />}
-      {view==="queue" && user && <ReviewQueue user={user} goTo={setView} />}
-      {view==="templates" && user && <Templates user={user} goTo={setView} />}
-      {view==="privacy" && <Privacy goTo={setView} />}
+      {view==="queue" && user && <ReviewQueue user={user} goTo={navigate} />}
+      {view==="templates" && user && <Templates user={user} goTo={navigate} />}
+      {view==="privacy" && <Privacy goTo={navigate} />}
       {view==="mentions" && <Mentions />}
-      {view==="brandvoice" && user && <BrandVoice user={user} onSave={handleBrandVoiceSave} goTo={setView} />}
+      {view==="brandvoice" && user && <BrandVoice user={user} onSave={handleBrandVoiceSave} goTo={navigate} />}
 
       {stripe && <StripeModal plan={stripe} onDone={handlePayment} onClose={()=>setStripe(null)} />}
     </div>
